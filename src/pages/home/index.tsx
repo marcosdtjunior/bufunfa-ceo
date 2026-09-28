@@ -17,7 +17,7 @@ export default function Home({ init }: { init: boolean }) {
     name: "",
     email: "",
     cpf: "",
-    password: "" || null,
+    password: null as string | null,
     photo: "",
   });
   const [modalEdit, setModalEdit] = useState(false);
@@ -27,14 +27,14 @@ export default function Home({ init }: { init: boolean }) {
       data: {
         ceo: { cpf, email, name, photo, companies },
       },
-    } = await AxiosInstance.axiosPrivate.get("/userInfo", {
+    } = await AxiosInstance.axiosPrivate.get("/userInfo/ceo", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     setUserInfo({ name, email, cpf, photo, password: null });
     if (photo) setItem("photo", photo);
-    if (companies) setCompaniesList(companies);
+    setCompaniesList(companies);
   }
 
   async function handleLogout(e: any) {
